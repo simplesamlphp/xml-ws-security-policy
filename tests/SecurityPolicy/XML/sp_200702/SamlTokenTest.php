@@ -1,0 +1,87 @@
+<?php
+
+declare(strict_types=1);
+
+namespace SimpleSAML\Test\WebServices\SecurityPolicy\XML\sp_200702;
+
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\WebServices\SecurityPolicy\Constants as C;
+use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractSpElement;
+use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractTokenAssertionType;
+use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\IncludeToken;
+use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\SamlToken;
+use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\Type\IncludeTokenValue;
+use SimpleSAML\XML\Attribute as XMLAttribute;
+use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\StringValue;
+
+use function dirname;
+
+/**
+ * Class \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\SamlTokenTest
+ *
+ * @package simplesamlphp/xml-ws-security-policy
+ */
+#[Group('sp')]
+#[CoversClass(SamlToken::class)]
+#[CoversClass(AbstractTokenAssertionType::class)]
+#[CoversClass(AbstractSpElement::class)]
+final class SamlTokenTest extends TestCase
+{
+    use SchemaValidationTestTrait;
+    use SerializableElementTestTrait;
+
+
+    /**
+     */
+    public static function setUpBeforeClass(): void
+    {
+        self::$testedClass = SamlToken::class;
+
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+            dirname(__FILE__, 4) . '/resources/xml/sp/200702/SamlToken.xml',
+        );
+    }
+
+
+    // test marshalling
+
+
+    /**
+     * Adding an empty SamlToken element should yield an empty element.
+     */
+    public function testMarshallingEmptyElement(): void
+    {
+        $spns = C::NS_SEC_POLICY_12;
+        $samlToken = new SamlToken();
+        $this->assertEquals(
+            "<sp:SamlToken xmlns:sp=\"$spns\"/>",
+            strval($samlToken),
+        );
+        $this->assertTrue($samlToken->isEmptyElement());
+    }
+
+
+    /**
+     * Test that creating a SamlToken from scratch works.
+     */
+    public function testMarshalling(): void
+    {
+        $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
+        $chunk = new Chunk(DOMDocumentFactory::fromString(
+            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
+        )->documentElement);
+
+        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
+        $samlToken = new SamlToken([$chunk], [$includeToken->toAttribute(), $attr]);
+        $this->assertEquals(
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            strval($samlToken),
+        );
+    }
+}

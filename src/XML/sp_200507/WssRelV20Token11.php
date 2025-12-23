@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+namespace SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507;
+
+use SimpleSAML\XML\SchemaValidatableElementInterface;
+use SimpleSAML\XML\SchemaValidatableElementTrait;
+
+/**
+ * An WssRelV20Token11 element
+ *
+ * @package simplesamlphp/xml-ws-security-policy
+ */
+final class WssRelV20Token11 extends AbstractQNameAssertionType implements SchemaValidatableElementInterface
+{
+    use SchemaValidatableElementTrait;
+}
