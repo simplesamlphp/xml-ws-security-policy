@@ -12,6 +12,7 @@ use SimpleSAML\WebServices\SecurityPolicy\Utils\XPath;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractSpElement;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractSpnegoContextTokenType;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\IncludeToken;
+use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\IncludeTokenTypeTrait;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\IssuerName;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\SpnegoContextToken;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\Type\IncludeTokenValue;
@@ -32,6 +33,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(SpnegoContextToken::class)]
+#[CoversClass(IncludeTokenTypeTrait::class)]
 #[CoversClass(AbstractSpnegoContextTokenType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class SpnegoContextTokenTest extends TestCase
