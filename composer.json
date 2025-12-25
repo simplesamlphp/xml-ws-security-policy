@@ -17,7 +17,7 @@
         "simplesamlphp/xml-common": "~2.5",
         "simplesamlphp/xml-ws-addressing": "~1.1",
         "simplesamlphp/xml-ws-policy": "~1.1",
-        "simplesamlphp/xml-wss-core": "~1.1"
+        "simplesamlphp/xml-wss-core": "~1.2"
     },
     "require-dev": {
         "simplesamlphp/simplesamlphp-test-framework": "~1.11"
