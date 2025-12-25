@@ -35,4 +35,3 @@ final class ElementRegistryTest extends TestCase
         }
     }
 }
-

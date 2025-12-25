@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimpleSAML\WebServices\SecurityPolicy\TestUtils\sp_200702;
 
-use SimpleSAML\WebServices\SecurityPolicy\Constants as C;
 use SimpleSAML\XML\DOMDocumentFactory;
 
 use function sprintf;
