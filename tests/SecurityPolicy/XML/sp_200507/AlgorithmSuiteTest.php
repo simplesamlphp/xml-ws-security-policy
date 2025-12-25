@@ -11,6 +11,7 @@ use SimpleSAML\Test\WebServices\SecurityPolicy\Constants as C;
 use SimpleSAML\WebServices\Policy\XML\wsp_200409\ExactlyOne;
 use SimpleSAML\WebServices\Policy\XML\wsp_200409\Policy;
 use SimpleSAML\WebServices\Security\Type\IDValue;
+use SimpleSAML\WebServices\SecurityPolicy\TestUtils\sp_200507\NestedPolicyTypeTestTrait;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\AbstractNestedPolicyType;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\AbstractSpElement;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\AlgorithmSuite;

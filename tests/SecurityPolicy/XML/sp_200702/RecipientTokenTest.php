@@ -8,6 +8,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use SimpleSAML\Test\WebServices\SecurityPolicy\Constants as C;
+use SimpleSAML\WebServices\SecurityPolicy\TestUtils\sp_200702\NestedPolicyTypeTestTrait;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractNestedPolicyType;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractSpElement;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\RecipientToken;

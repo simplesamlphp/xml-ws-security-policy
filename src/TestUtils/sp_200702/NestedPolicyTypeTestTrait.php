@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\Test\WebServices\SecurityPolicy\XML\sp_200702;
+namespace SimpleSAML\WebServices\SecurityPolicy\TestUtils\sp_200702;
 
-use SimpleSAML\Test\WebServices\SecurityPolicy\Constants as C;
+use SimpleSAML\WebServices\SecurityPolicy\Constants as C;
 use SimpleSAML\XML\DOMDocumentFactory;
 
 use function sprintf;
 use function strval;
 
 /**
- * Class \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\NestedPolicyTypeTestTrait
+ * Class \SimpleSAML\WebServices\SecurityPolicy\TestUtils\sp_200702\NestedPolicyTypeTestTrait
  *
  * @package simplesamlphp/xml-ws-security-policy
+ *
+ * @phpstan-ignore trait.unused
  */
 trait NestedPolicyTypeTestTrait
 {
@@ -70,7 +72,7 @@ XML;
         $localName = static::$testedClass::getLocalName();
         $prefix = static::$testedClass::getNamespacePrefix();
         $namespaceURI = static::$testedClass::getNamespaceURI();
-        $xml = sprintf($xml, $prefix, $localName, $prefix, $namespaceURI, C::NAMESPACE);
+        $xml = sprintf($xml, $prefix, $localName, $prefix, $namespaceURI, 'urn:x-simplesamlphp:namespace');
         $xmlRepresentation = DOMDocumentFactory::fromString($xml);
 
         /** @var \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractNestedPolicyType $qns */

@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace SimpleSAML\Test\WebServices\SecurityPolicy\XML\sp_200507;
+namespace SimpleSAML\WebServices\SecurityPolicy\TestUtils\sp_200507;
 
 use function strval;
 
 /**
- * Class \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\NestedPolicyTypeTestTrait
+ * Class \SimpleSAML\WebServices\SecurityPolicy\TestUtils\sp_200507\NestedPolicyTypeTestTrait
  *
  * @package simplesamlphp/xml-ws-security-policy
+ *
+ * @phpstan-ignore trait.unused
  */
 trait NestedPolicyTypeTestTrait
 {
