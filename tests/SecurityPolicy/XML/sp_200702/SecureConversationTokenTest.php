@@ -12,7 +12,6 @@ use SimpleSAML\WebServices\SecurityPolicy\Utils\XPath;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractSecureConversationTokenType;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractSpElement;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\IncludeToken;
-use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\IncludeTokenTypeTrait;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\IssuerName;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\SecureConversationToken;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\Type\IncludeTokenValue;
@@ -21,7 +20,6 @@ use SimpleSAML\XML\Chunk;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\Type\StringValue;
 
 use function dirname;
@@ -33,7 +31,6 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(SecureConversationToken::class)]
-#[CoversClass(IncludeTokenTypeTrait::class)]
 #[CoversClass(AbstractSecureConversationTokenType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class SecureConversationTokenTest extends TestCase
@@ -58,7 +55,7 @@ final class SecureConversationTokenTest extends TestCase
      */
     public function testMarshallingElementOrdering(): void
     {
-        $issuer = new IssuerName(AnyURIValue::fromString('urn:x-simplesamlphp:issuer'));
+        $issuer = IssuerName::fromString('urn:x-simplesamlphp:issuer');
         $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
         $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
         $chunk = new Chunk(DOMDocumentFactory::fromString(
@@ -104,7 +101,7 @@ final class SecureConversationTokenTest extends TestCase
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
         )->documentElement);
 
-        $issuer = new IssuerName(AnyURIValue::fromString('urn:x-simplesamlphp:issuer'));
+        $issuer = IssuerName::fromString('urn:x-simplesamlphp:issuer');
 
         $secureConversationToken = new SecureConversationToken(
             $issuer,

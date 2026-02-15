@@ -58,12 +58,12 @@ final class UsernameTokenTest extends TestCase
     public function testMarshallingEmptyElement(): void
     {
         $spns = C::NS_SEC_POLICY_11;
-        $UsernameToken = new UsernameToken();
+        $usernameToken = new UsernameToken();
         $this->assertEquals(
             "<sp:UsernameToken xmlns:sp=\"$spns\"/>",
-            strval($UsernameToken),
+            strval($usernameToken),
         );
-        $this->assertTrue($UsernameToken->isEmptyElement());
+        $this->assertTrue($usernameToken->isEmptyElement());
     }
 
 
@@ -78,10 +78,10 @@ final class UsernameTokenTest extends TestCase
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
         )->documentElement);
 
-        $UsernameToken = new UsernameToken([$chunk], [$includeToken->toAttribute(), $attr]);
+        $usernameToken = new UsernameToken([$chunk], [$includeToken->toAttribute(), $attr]);
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($UsernameToken),
+            strval($usernameToken),
         );
     }
 }

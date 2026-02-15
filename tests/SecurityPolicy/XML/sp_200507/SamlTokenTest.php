@@ -58,12 +58,12 @@ final class SamlTokenTest extends TestCase
     public function testMarshallingEmptyElement(): void
     {
         $spns = C::NS_SEC_POLICY_11;
-        $SamlToken = new SamlToken();
+        $samlToken = new SamlToken();
         $this->assertEquals(
             "<sp:SamlToken xmlns:sp=\"$spns\"/>",
-            strval($SamlToken),
+            strval($samlToken),
         );
-        $this->assertTrue($SamlToken->isEmptyElement());
+        $this->assertTrue($samlToken->isEmptyElement());
     }
 
 
@@ -78,10 +78,10 @@ final class SamlTokenTest extends TestCase
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
         )->documentElement);
 
-        $SamlToken = new SamlToken([$chunk], [$includeToken->toAttribute(), $attr]);
+        $samlToken = new SamlToken([$chunk], [$includeToken->toAttribute(), $attr]);
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($SamlToken),
+            strval($samlToken),
         );
     }
 }

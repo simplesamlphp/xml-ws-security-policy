@@ -54,7 +54,7 @@ final class SignedElementsTest extends TestCase
      */
     public function testMarshallingElementOrdering(): void
     {
-        $xpath = new XPath(StringValue::fromString('/bookstore/book[price>35.00]/title'));
+        $xpath = XPath::fromString('/bookstore/book[price>35.00]/title');
         $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
         $chunk = new Chunk(DOMDocumentFactory::fromString(
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
@@ -94,7 +94,7 @@ final class SignedElementsTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $xpath = new XPath(StringValue::fromString('/bookstore/book[price>35.00]/title'));
+        $xpath = XPath::fromString('/bookstore/book[price>35.00]/title');
         $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
         $chunk = new Chunk(DOMDocumentFactory::fromString(
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',

@@ -58,12 +58,12 @@ final class X509TokenTest extends TestCase
     public function testMarshallingEmptyElement(): void
     {
         $spns = C::NS_SEC_POLICY_11;
-        $X509Token = new X509Token();
+        $x509Token = new X509Token();
         $this->assertEquals(
             "<sp:X509Token xmlns:sp=\"$spns\"/>",
-            strval($X509Token),
+            strval($x509Token),
         );
-        $this->assertTrue($X509Token->isEmptyElement());
+        $this->assertTrue($x509Token->isEmptyElement());
     }
 
 
@@ -78,10 +78,10 @@ final class X509TokenTest extends TestCase
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
         )->documentElement);
 
-        $X509Token = new X509Token([$chunk], [$includeToken->toAttribute(), $attr]);
+        $x509Token = new X509Token([$chunk], [$includeToken->toAttribute(), $attr]);
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($X509Token),
+            strval($x509Token),
         );
     }
 }

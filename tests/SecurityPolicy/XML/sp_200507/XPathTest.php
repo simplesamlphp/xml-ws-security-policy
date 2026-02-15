@@ -11,7 +11,6 @@ use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\AbstractSpElement;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\XPath;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\StringValue;
 
 use function dirname;
 use function strval;
@@ -49,7 +48,7 @@ final class XPathTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $xpath = new XPath(StringValue::fromString('/bookstore/book[price>35.00]/title'));
+        $xpath = XPath::fromString('/bookstore/book[price>35.00]/title');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

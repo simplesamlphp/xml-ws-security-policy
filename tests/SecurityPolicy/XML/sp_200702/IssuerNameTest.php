@@ -11,7 +11,6 @@ use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractSpElement;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\IssuerName;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function dirname;
 use function strval;
@@ -49,7 +48,7 @@ final class IssuerNameTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $issuerName = new IssuerName(AnyURIValue::fromString('urn:x-simplesamlphp:namespace'));
+        $issuerName = IssuerName::fromString('urn:x-simplesamlphp:namespace');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

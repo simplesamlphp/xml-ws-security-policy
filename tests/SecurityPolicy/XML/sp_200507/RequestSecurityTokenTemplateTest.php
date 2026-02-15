@@ -59,7 +59,7 @@ final class RequestSecurityTokenTemplateTest extends TestCase
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
         )->documentElement);
 
-        $RequestSecurityTokenTemplateElements = new RequestSecurityTokenTemplate(
+        $requestSecurityTokenTemplateElements = new RequestSecurityTokenTemplate(
             AnyURIValue::fromString('urn:x-simplesamlphp:version'),
             [$chunk],
             [$attr],
@@ -67,7 +67,7 @@ final class RequestSecurityTokenTemplateTest extends TestCase
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($RequestSecurityTokenTemplateElements),
+            strval($requestSecurityTokenTemplateElements),
         );
     }
 
@@ -78,11 +78,11 @@ final class RequestSecurityTokenTemplateTest extends TestCase
     public function testMarshallingEmptyElement(): void
     {
         $spns = C::NS_SEC_POLICY_11;
-        $RequestSecurityTokenTemplate = new RequestSecurityTokenTemplate();
+        $requestSecurityTokenTemplate = new RequestSecurityTokenTemplate();
         $this->assertEquals(
             "<sp:RequestSecurityTokenTemplate xmlns:sp=\"$spns\"/>",
-            strval($RequestSecurityTokenTemplate),
+            strval($requestSecurityTokenTemplate),
         );
-        $this->assertTrue($RequestSecurityTokenTemplate->isEmptyElement());
+        $this->assertTrue($requestSecurityTokenTemplate->isEmptyElement());
     }
 }

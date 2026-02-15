@@ -57,7 +57,7 @@ final class IssuedTokenTest extends TestCase
      */
     public function testMarshallingElementOrdering(): void
     {
-        $issuer = new IssuerName(AnyURIValue::fromString('urn:x-simplesamlphp:issuer'));
+        $issuer = IssuerName::fromString('urn:x-simplesamlphp:issuer');
         $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
         $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
         $chunk = new Chunk(DOMDocumentFactory::fromString(
@@ -106,7 +106,7 @@ final class IssuedTokenTest extends TestCase
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
         )->documentElement);
 
-        $issuer = new IssuerName(AnyURIValue::fromString('urn:x-simplesamlphp:issuer'));
+        $issuer = IssuerName::fromString('urn:x-simplesamlphp:issuer');
         $requestSecurityTokenTemplate = new RequestSecurityTokenTemplate(
             AnyURIValue::fromString('urn:x-simplesamlphp:version'),
             [$chunk],
