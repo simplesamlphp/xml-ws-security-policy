@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507;
 
-use DOMNodeList;
-use DOMXPath;
+use Dom;
 use SimpleSAML\WebServices\SecurityPolicy\Assert\Assert;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TypedTextContentTrait;
@@ -31,8 +30,8 @@ final class XPath extends AbstractSpElement
      */
     protected function validateContent(string $content): void
     {
-        $dom = new DOMXPath(DOMDocumentFactory::create());
+        $dom = new Dom\XPath(DOMDocumentFactory::create());
         $result = $dom->evaluate($content);
-        Assert::isInstanceOf($result, DOMNodeList::class);
+        Assert::isInstanceOf($result, Dom\NodeList::class);
     }
 }

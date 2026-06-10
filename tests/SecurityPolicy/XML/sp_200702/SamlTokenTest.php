@@ -53,21 +53,6 @@ final class SamlTokenTest extends TestCase
 
 
     /**
-     * Adding an empty SamlToken element should yield an empty element.
-     */
-    public function testMarshallingEmptyElement(): void
-    {
-        $spns = C::NS_SEC_POLICY_12;
-        $samlToken = new SamlToken();
-        $this->assertEquals(
-            "<sp:SamlToken xmlns:sp=\"$spns\"/>",
-            strval($samlToken),
-        );
-        $this->assertTrue($samlToken->isEmptyElement());
-    }
-
-
-    /**
      * Test that creating a SamlToken from scratch works.
      */
     public function testMarshalling(): void
@@ -79,9 +64,26 @@ final class SamlTokenTest extends TestCase
 
         $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
         $samlToken = new SamlToken([$chunk], [$includeToken->toAttribute(), $attr]);
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($samlToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+    }
+
+
+    /**
+     * Adding an empty SamlToken element should yield an empty element.
+     */
+    public function testMarshallingEmptyElement(): void
+    {
+        $spns = C::NS_SEC_POLICY_12;
+        $samlToken = new SamlToken();
         $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            "<sp:SamlToken xmlns:sp=\"$spns\"/>",
             strval($samlToken),
         );
+        $this->assertTrue($samlToken->isEmptyElement());
     }
 }

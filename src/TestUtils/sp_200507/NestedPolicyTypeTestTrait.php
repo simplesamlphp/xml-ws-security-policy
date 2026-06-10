@@ -26,9 +26,10 @@ trait NestedPolicyTypeTestTrait
         /** @var \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\AbstractNestedPolicyType $np */
         $np = new static::$testedClass([static::$policy, static::$some], [static::$attr]);
 
-        $this->assertEquals(
-            static::$xmlRepresentation->saveXML(static::$xmlRepresentation->documentElement),
-            strval($np),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($np);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }
