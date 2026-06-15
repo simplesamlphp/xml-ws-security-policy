@@ -118,12 +118,12 @@ final class IssuedTokenTest extends TestCase
             [$attr1],
         );
 
+        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always)->toAttribute();
         $issuedToken = new IssuedToken(
             $requestSecurityTokenTemplate,
             $issuer,
-            IncludeTokenValue::fromEnum(IncludeToken::Always),
             [$chunk],
-            [$attr1],
+            [$includeToken, $attr1],
         );
 
         $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
@@ -173,12 +173,12 @@ final class IssuedTokenTest extends TestCase
             [$attr1],
         );
 
+        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always)->toAttribute();
         $issuedToken = new IssuedToken(
             $requestSecurityTokenTemplate,
             $issuer,
-            IncludeTokenValue::fromEnum(IncludeToken::Always),
             [$chunk],
-            [$attr1],
+            [$includeToken, $attr1],
         );
         $issuedTokenElement = $issuedToken->toXML();
 

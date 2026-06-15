@@ -35,11 +35,6 @@ abstract class AbstractIssuedTokenType extends AbstractSpElement
     /** The namespace-attribute for the xs:anyAttribute element */
     public const string XS_ANY_ATTR_NAMESPACE = NS::ANY;
 
-    /** The exclusions for the xs:anyAttribute element */
-    public const array XS_ANY_ATTR_EXCLUSIONS = [
-        ['http://schemas.xmlsoap.org/ws/2005/07/securitypolicy', 'IncludeToken'],
-    ];
-
 
     /**
      * IssuedTokenType constructor.
@@ -48,18 +43,16 @@ abstract class AbstractIssuedTokenType extends AbstractSpElement
      *   \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\RequestSecurityTokenTemplate
      * ) $requestSecurityTokenTemplate
      * @param \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\Issuer|null $issuer
-     * @param \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\Type\IncludeTokenValue|null $includeToken
      * @param \SimpleSAML\XML\SerializableElementInterface[] $elts
      * @param list<\SimpleSAML\XML\Attribute> $namespacedAttributes
      */
     final public function __construct(
         protected RequestSecurityTokenTemplate $requestSecurityTokenTemplate,
         protected ?Issuer $issuer = null,
-        ?IncludeTokenValue $includeToken = null,
         array $elts = [],
         array $namespacedAttributes = [],
     ) {
-        $this->setIncludeToken($includeToken);
+        $this->setIncludeToken($namespacedAttributes);
         $this->setElements($elts);
         $this->setAttributesNS($namespacedAttributes);
     }
@@ -114,7 +107,6 @@ abstract class AbstractIssuedTokenType extends AbstractSpElement
         return new static(
             $requestSecurityTokenTemplate[0],
             array_pop($issuer),
-            self::getOptionalAttribute($xml, 'IncludeToken', IncludeTokenValue::class, null),
             self::getChildElementsFromXML($xml),
             self::getAttributesNSFromXML($xml),
         );
@@ -127,10 +119,6 @@ abstract class AbstractIssuedTokenType extends AbstractSpElement
     public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
-
-        if ($this->getIncludeToken() !== null) {
-            $e->setAttribute('IncludeToken', $this->getIncludeToken()->getValue());
-        }
 
         if ($this->getIssuer() !== null) {
             $this->getIssuer()->toXML($e);
