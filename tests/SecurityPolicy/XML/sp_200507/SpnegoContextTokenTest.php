@@ -107,11 +107,11 @@ final class SpnegoContextTokenTest extends TestCase
             [$attr2],
         );
 
+        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always)->toAttribute();
         $spnegoContextToken = new SpnegoContextToken(
             $issuer,
-            IncludeTokenValue::fromEnum(IncludeToken::Always),
             [$chunk],
-            [$attr1],
+            [$includeToken, $attr1],
         );
         $spnegoContextTokenElement = $spnegoContextToken->toXML();
 
@@ -170,11 +170,11 @@ final class SpnegoContextTokenTest extends TestCase
             [$attr2],
         );
 
+        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always)->toAttribute();
         $spnegoContextToken = new SpnegoContextToken(
             $issuer,
-            IncludeTokenValue::fromEnum(IncludeToken::Always),
             [$chunk],
-            [$attr1],
+            [$includeToken, $attr1],
         );
 
         $this->assertEquals(
