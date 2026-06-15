@@ -107,11 +107,11 @@ final class SecureConversationTokenTest extends TestCase
             [$attr2],
         );
 
+        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always)->toAttribute();
         $secureConversationToken = new SecureConversationToken(
             $issuer,
-            IncludeTokenValue::fromEnum(IncludeToken::Always),
             [$chunk],
-            [$attr1],
+            [$includeToken, $attr1],
         );
         $secureConversationTokenElement = $secureConversationToken->toXML();
 
@@ -170,11 +170,11 @@ final class SecureConversationTokenTest extends TestCase
             [$attr2],
         );
 
+        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always)->toAttribute();
         $secureConversationToken = new SecureConversationToken(
             $issuer,
-            IncludeTokenValue::fromEnum(IncludeToken::Always),
             [$chunk],
-            [$attr1],
+            [$includeToken, $attr1],
         );
 
         $this->assertEquals(

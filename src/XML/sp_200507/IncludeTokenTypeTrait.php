@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507;
 
+use SimpleSAML\WebServices\SecurityPolicy\Constants as C;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\Type\IncludeTokenValue;
 
 /**
@@ -18,7 +19,7 @@ trait IncludeTokenTypeTrait
      *
      * @var \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\Type\IncludeTokenValue|null
      */
-    protected ?IncludeTokenValue $includeToken;
+    protected ?IncludeTokenValue $includeToken = null;
 
 
     /**
@@ -35,10 +36,15 @@ trait IncludeTokenTypeTrait
     /**
      * Set the value of the includeToken-property
      *
-     * @param \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\Type\IncludeTokenValue|null $includeToken
+     * @param array<\SimpleSAML\XML\Attribute> $namespacedAttributes
      */
-    protected function setIncludeToken(?IncludeTokenValue $includeToken = null): void
+    protected function setIncludeToken(array $namespacedAttributes = []): void
     {
-        $this->includeToken = $includeToken;
+        foreach ($namespacedAttributes as $attr) {
+            if ($attr->getNamespaceURI() === C::NS_SEC_POLICY_11 && $attr->getAttrName() === 'IncludeToken') {
+                $this->includeToken = IncludeTokenValue::fromString($attr->getAttrValue()->getValue());
+                return;
+            }
+        }
     }
 }

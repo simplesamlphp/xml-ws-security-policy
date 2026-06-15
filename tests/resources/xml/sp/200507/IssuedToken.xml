@@ -1,4 +1,4 @@
-<sp:IssuedToken xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" xmlns:ssp="urn:x-simplesamlphp:namespace" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:m="https://www.w3schools.com/prices" IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Always" ssp:test1="value1">
+<sp:IssuedToken xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" xmlns:ssp="urn:x-simplesamlphp:namespace" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:m="https://www.w3schools.com/prices" sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Always" ssp:test1="value1">
   <sp:Issuer ssp:test2="value2">
     <wsa:Address ssp:test2="value2">https://login.microsoftonline.com/login.srf</wsa:Address>
     <wsa:ReferenceProperties>
