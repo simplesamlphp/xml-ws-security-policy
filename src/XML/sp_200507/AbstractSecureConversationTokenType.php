@@ -6,7 +6,6 @@ namespace SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507;
 
 use DOMElement;
 use SimpleSAML\WebServices\SecurityPolicy\Assert\Assert;
-use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\Type\IncludeTokenValue;
 use SimpleSAML\XML\ExtendableAttributesTrait;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
