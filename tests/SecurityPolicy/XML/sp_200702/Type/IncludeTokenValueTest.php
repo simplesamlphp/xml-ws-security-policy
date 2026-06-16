@@ -8,7 +8,10 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+<<<<<<< HEAD
 use SimpleSAML\WebServices\SecurityPolicy\Constants as C;
+=======
+>>>>>>> cca25c1 (Fix namespaced IncludeToken-attribute (both sp-versions and coverage))
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\IncludeToken;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\Type\IncludeTokenValue;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
@@ -39,6 +42,7 @@ final class IncludeTokenValueTest extends TestCase
 
 
     /**
+<<<<<<< HEAD
      * Test helpers
      */
     public function testToAttribute(): void
@@ -54,14 +58,21 @@ final class IncludeTokenValueTest extends TestCase
 
 
     /**
+=======
+>>>>>>> cca25c1 (Fix namespaced IncludeToken-attribute (both sp-versions and coverage))
      * @return array<string, array{0: bool, 1: string}>
      */
     public static function provideURI(): array
     {
         return [
             'Always' => [true, IncludeToken::Always->value],
+<<<<<<< HEAD
             'AlwaysToRecipient' => [true, IncludeToken::AlwaysToRecipient->value],
             'AlwaysToInitiator' => [true, IncludeToken::AlwaysToInitiator->value],
+=======
+            'AlwaysToInitiator' => [true, IncludeToken::AlwaysToInitiator->value],
+            'AlwaysToRecipient' => [true, IncludeToken::AlwaysToRecipient->value],
+>>>>>>> cca25c1 (Fix namespaced IncludeToken-attribute (both sp-versions and coverage))
             'Once' => [true, IncludeToken::Once->value],
             'Never' => [true, IncludeToken::Never->value],
             'urn' => [false, 'urn:x-simplesamlphp:phpunit'],
