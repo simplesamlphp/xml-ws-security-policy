@@ -29,6 +29,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(X509Token::class)]
+#[CoversClass(IncludeToken::class)]
 #[CoversClass(AbstractTokenAssertionType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class X509TokenTest extends TestCase
@@ -79,9 +80,13 @@ final class X509TokenTest extends TestCase
 
         $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
         $x509Token = new X509Token([$chunk], [$includeToken->toAttribute(), $attr]);
+
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($x509Token),
         );
+
+        $this->assertFalse($x509Token->isEmptyElement());
+        $this->assertEquals($x509Token->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }

@@ -29,6 +29,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(SecurityContextToken::class)]
+#[CoversClass(IncludeToken::class)]
 #[CoversClass(AbstractTokenAssertionType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class SecurityContextTokenTest extends TestCase
@@ -79,9 +80,16 @@ final class SecurityContextTokenTest extends TestCase
 
         $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
         $securityContextToken = new SecurityContextToken([$chunk], [$includeToken->toAttribute(), $attr]);
+
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($securityContextToken),
+        );
+
+        $this->assertFalse($securityContextToken->isEmptyElement());
+        $this->assertEquals(
+            $securityContextToken->getIncludeToken(),
+            IncludeTokenValue::fromEnum(IncludeToken::Always),
         );
     }
 }

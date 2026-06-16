@@ -29,6 +29,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(HttpsToken::class)]
+#[CoversClass(IncludeToken::class)]
 #[CoversClass(AbstractTokenAssertionType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class HttpsTokenTest extends TestCase
@@ -83,5 +84,8 @@ final class HttpsTokenTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($httpsToken),
         );
+
+        $this->assertFalse($httpsToken->isEmptyElement());
+        $this->assertEquals($httpsToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }

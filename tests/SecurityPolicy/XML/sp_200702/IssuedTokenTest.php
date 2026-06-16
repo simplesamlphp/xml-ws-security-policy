@@ -33,6 +33,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(IssuedToken::class)]
+#[CoversClass(IncludeToken::class)]
 #[CoversClass(AbstractIssuedTokenType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class IssuedTokenTest extends TestCase
@@ -123,5 +124,8 @@ final class IssuedTokenTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($issuedToken),
         );
+
+        $this->assertFalse($issuedToken->isEmptyElement());
+        $this->assertEquals($issuedToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }

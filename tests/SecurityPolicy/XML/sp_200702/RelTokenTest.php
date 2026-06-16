@@ -29,6 +29,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(RelToken::class)]
+#[CoversClass(IncludeToken::class)]
 #[CoversClass(AbstractTokenAssertionType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class RelTokenTest extends TestCase
@@ -83,5 +84,8 @@ final class RelTokenTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($relToken),
         );
+
+        $this->assertFalse($relToken->isEmptyElement());
+        $this->assertEquals($relToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }

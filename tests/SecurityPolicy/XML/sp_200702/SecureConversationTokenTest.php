@@ -31,6 +31,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(SecureConversationToken::class)]
+#[CoversClass(IncludeToken::class)]
 #[CoversClass(AbstractSecureConversationTokenType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class SecureConversationTokenTest extends TestCase
@@ -112,6 +113,12 @@ final class SecureConversationTokenTest extends TestCase
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($secureConversationToken),
+        );
+
+        $this->assertFalse($secureConversationToken->isEmptyElement());
+        $this->assertEquals(
+            $secureConversationToken->getIncludeToken(),
+            IncludeTokenValue::fromEnum(IncludeToken::Always),
         );
     }
 }

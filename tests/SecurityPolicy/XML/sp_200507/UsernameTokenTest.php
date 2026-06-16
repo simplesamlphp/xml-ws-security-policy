@@ -29,6 +29,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(UsernameToken::class)]
+#[CoversClass(IncludeTokenValue::class)]
 #[CoversClass(AbstractTokenAssertionType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class UsernameTokenTest extends TestCase

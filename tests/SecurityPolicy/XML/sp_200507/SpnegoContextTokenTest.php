@@ -39,6 +39,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(SpnegoContextToken::class)]
+#[CoversClass(IncludeTokenValue::class)]
 #[CoversClass(AbstractSpnegoContextTokenType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class SpnegoContextTokenTest extends TestCase
@@ -181,5 +182,8 @@ final class SpnegoContextTokenTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($spnegoContextToken),
         );
+
+        $this->assertFalse($spnegoContextToken->isEmptyElement());
+        $this->assertEquals($spnegoContextToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }

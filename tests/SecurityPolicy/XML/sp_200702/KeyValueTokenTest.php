@@ -29,6 +29,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(KeyValueToken::class)]
+#[CoversClass(IncludeToken::class)]
 #[CoversClass(AbstractKeyValueTokenType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class KeyValueTokenTest extends TestCase
@@ -83,5 +84,8 @@ final class KeyValueTokenTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keyValueToken),
         );
+
+        $this->assertFalse($keyValueToken->isEmptyElement());
+        $this->assertEquals($keyValueToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }
