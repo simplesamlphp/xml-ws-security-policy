@@ -83,5 +83,8 @@ final class KeyValueTokenTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keyValueToken),
         );
+
+        $this->assertFalse($keyValueToken->isEmptyElement());
+        $this->assertEquals($keyValueToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }

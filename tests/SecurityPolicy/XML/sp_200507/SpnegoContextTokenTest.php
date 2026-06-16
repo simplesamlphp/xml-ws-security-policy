@@ -181,5 +181,8 @@ final class SpnegoContextTokenTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($spnegoContextToken),
         );
+
+        $this->assertFalse($spnegoContextToken->isEmptyElement());
+        $this->assertEquals($spnegoContextToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }

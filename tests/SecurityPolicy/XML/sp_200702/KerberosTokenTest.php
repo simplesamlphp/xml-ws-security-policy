@@ -83,5 +83,8 @@ final class KerberosTokenTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($kerberosToken),
         );
+
+        $this->assertFalse($kerberosToken->isEmptyElement());
+        $this->assertEquals($kerberosToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }

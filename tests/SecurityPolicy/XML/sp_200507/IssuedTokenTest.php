@@ -193,5 +193,8 @@ final class IssuedTokenTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($issuedToken),
         );
+
+        $this->assertFalse($issuedToken->isEmptyElement());
+        $this->assertEquals($issuedToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }

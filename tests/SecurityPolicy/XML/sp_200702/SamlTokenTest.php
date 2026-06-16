@@ -79,9 +79,13 @@ final class SamlTokenTest extends TestCase
 
         $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
         $samlToken = new SamlToken([$chunk], [$includeToken->toAttribute(), $attr]);
+
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($samlToken),
         );
+
+        $this->assertFalse($samlToken->isEmptyElement());
+        $this->assertEquals($samlToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }

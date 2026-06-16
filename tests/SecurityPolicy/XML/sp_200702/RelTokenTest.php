@@ -83,5 +83,8 @@ final class RelTokenTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($relToken),
         );
+
+        $this->assertFalse($relToken->isEmptyElement());
+        $this->assertEquals($relToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }

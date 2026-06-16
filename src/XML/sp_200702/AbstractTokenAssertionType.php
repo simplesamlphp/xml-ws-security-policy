@@ -22,6 +22,7 @@ abstract class AbstractTokenAssertionType extends AbstractSpElement
 {
     use ExtendableAttributesTrait;
     use ExtendableElementTrait;
+    use IncludeTokenTypeTrait;
 
 
     /** The namespace-attribute for the xs:any element */
@@ -41,6 +42,7 @@ abstract class AbstractTokenAssertionType extends AbstractSpElement
         array $elts = [],
         array $namespacedAttributes = [],
     ) {
+        $this->setIncludeToken($namespacedAttributes);
         $this->setElements($elts);
         $this->setAttributesNS($namespacedAttributes);
     }

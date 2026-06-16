@@ -79,9 +79,13 @@ final class X509TokenTest extends TestCase
 
         $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
         $x509Token = new X509Token([$chunk], [$includeToken->toAttribute(), $attr]);
+
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($x509Token),
         );
+
+        $this->assertFalse($x509Token->isEmptyElement());
+        $this->assertEquals($x509Token->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }

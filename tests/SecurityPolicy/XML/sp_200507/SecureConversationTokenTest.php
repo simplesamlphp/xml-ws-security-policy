@@ -181,5 +181,11 @@ final class SecureConversationTokenTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($secureConversationToken),
         );
+
+        $this->assertFalse($secureConversationToken->isEmptyElement());
+        $this->assertEquals(
+            $secureConversationToken->getIncludeToken(),
+            IncludeTokenValue::fromEnum(IncludeToken::Always),
+        );
     }
 }

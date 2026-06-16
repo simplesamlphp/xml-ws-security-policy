@@ -83,5 +83,8 @@ final class HttpsTokenTest extends TestCase
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($httpsToken),
         );
+
+        $this->assertFalse($httpsToken->isEmptyElement());
+        $this->assertEquals($httpsToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
 }
