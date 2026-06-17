@@ -57,6 +57,16 @@ final class IncludeTokenValueTest extends TestCase
     }
 
 
+    public function testFromEnum(): void
+    {
+        $x = IncludeTokenValue::fromEnum(IncludeToken::Always);
+        $this->assertEquals(IncludeToken::Always, $x->toEnum());
+
+        $y = IncludeTokenValue::fromString(IncludeToken::Always->value);
+        $this->assertEquals(IncludeToken::Always, $y->toEnum());
+    }
+
+
     /**
 =======
 >>>>>>> cca25c1 (Fix namespaced IncludeToken-attribute (both sp-versions and coverage))

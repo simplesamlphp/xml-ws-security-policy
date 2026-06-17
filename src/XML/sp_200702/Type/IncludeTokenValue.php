@@ -43,6 +43,15 @@ class IncludeTokenValue extends AnyURIValue
 
 
     /**
+     * @return \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\IncludeToken $value
+     */
+    public function toEnum(): IncludeToken
+    {
+        return IncludeToken::from($this->getValue());
+    }
+
+
+    /**
      * @param \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\IncludeToken $value
      * @return static
      */
