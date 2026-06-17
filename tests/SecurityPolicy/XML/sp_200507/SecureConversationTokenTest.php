@@ -39,6 +39,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(SecureConversationToken::class)]
+#[CoversClass(IncludeTokenValue::class)]
 #[CoversClass(AbstractSecureConversationTokenType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class SecureConversationTokenTest extends TestCase

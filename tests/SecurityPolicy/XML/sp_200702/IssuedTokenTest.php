@@ -33,6 +33,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(IssuedToken::class)]
+#[CoversClass(IncludeToken::class)]
 #[CoversClass(AbstractIssuedTokenType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class IssuedTokenTest extends TestCase

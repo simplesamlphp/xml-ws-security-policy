@@ -8,6 +8,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+use SimpleSAML\WebServices\SecurityPolicy\Constants as C;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\IncludeToken;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\Type\IncludeTokenValue;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
@@ -34,6 +35,21 @@ final class IncludeTokenValueTest extends TestCase
         } catch (SchemaViolationException $e) {
             $this->assertFalse($shouldPass);
         }
+    }
+
+
+    /**
+     * Test helpers
+     */
+    public function testToAttribute(): void
+    {
+        $includeToken = IncludeTokenValue::fromString(IncludeToken::Always->value);
+        $attr = $includeToken->toAttribute();
+
+        $this->assertEquals($attr->getNamespaceURI(), C::NS_SEC_POLICY_11);
+        $this->assertEquals($attr->getNamespacePrefix(), 'sp');
+        $this->assertEquals($attr->getAttrName(), 'IncludeToken');
+        $this->assertEquals($attr->getAttrValue(), IncludeToken::Always->value);
     }
 
 

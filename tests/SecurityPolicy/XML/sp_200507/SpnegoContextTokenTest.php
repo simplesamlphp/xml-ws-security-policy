@@ -39,6 +39,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(SpnegoContextToken::class)]
+#[CoversClass(IncludeTokenValue::class)]
 #[CoversClass(AbstractSpnegoContextTokenType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class SpnegoContextTokenTest extends TestCase

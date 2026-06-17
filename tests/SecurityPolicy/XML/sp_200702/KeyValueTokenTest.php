@@ -29,6 +29,7 @@ use function dirname;
  */
 #[Group('sp')]
 #[CoversClass(KeyValueToken::class)]
+#[CoversClass(IncludeToken::class)]
 #[CoversClass(AbstractKeyValueTokenType::class)]
 #[CoversClass(AbstractSpElement::class)]
 final class KeyValueTokenTest extends TestCase
