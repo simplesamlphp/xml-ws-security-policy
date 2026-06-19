@@ -8,10 +8,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
-<<<<<<< HEAD
 use SimpleSAML\WebServices\SecurityPolicy\Constants as C;
-=======
->>>>>>> cca25c1 (Fix namespaced IncludeToken-attribute (both sp-versions and coverage))
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\IncludeToken;
 use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\Type\IncludeTokenValue;
 use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
@@ -42,7 +39,6 @@ final class IncludeTokenValueTest extends TestCase
 
 
     /**
-<<<<<<< HEAD
      * Test helpers
      */
     public function testToAttribute(): void
@@ -68,8 +64,6 @@ final class IncludeTokenValueTest extends TestCase
 
 
     /**
-=======
->>>>>>> cca25c1 (Fix namespaced IncludeToken-attribute (both sp-versions and coverage))
      * @return array<string, array{0: bool, 1: string}>
      */
     public static function provideURI(): array
