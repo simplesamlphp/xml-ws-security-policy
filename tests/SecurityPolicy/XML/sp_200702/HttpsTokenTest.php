@@ -79,9 +79,11 @@ final class HttpsTokenTest extends TestCase
 
         $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
         $httpsToken = new HttpsToken([$chunk], [$includeToken->toAttribute(), $attr]);
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($httpsToken),
-        );
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($httpsToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

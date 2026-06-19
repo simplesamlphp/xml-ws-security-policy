@@ -79,9 +79,10 @@ final class RsaTokenTest extends TestCase
         )->documentElement);
 
         $rsaToken = new RsaToken([$chunk], [$includeToken->toAttribute(), $attr]);
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($rsaToken),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($rsaToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

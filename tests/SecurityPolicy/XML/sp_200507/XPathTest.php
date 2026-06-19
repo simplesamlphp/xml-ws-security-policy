@@ -50,9 +50,10 @@ final class XPathTest extends TestCase
     {
         $xpath = XPath::fromString('/bookstore/book[price>35.00]/title');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($xpath),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($xpath);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

@@ -50,6 +50,35 @@ final class EncryptedElementsTest extends TestCase
     }
 
 
+    // test marshalling
+
+
+    /**
+     * Test that creating a EncryptedElements from scratch works.
+     */
+    public function testMarshalling(): void
+    {
+        $xpath = XPath::fromString('/bookstore/book[price>35.00]/title');
+        $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
+        $chunk = new Chunk(DOMDocumentFactory::fromString(
+            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
+        )->documentElement);
+
+        $encryptedElements = new EncryptedElements(
+            [$xpath],
+            AnyURIValue::fromString('urn:x-simplesamlphp:version'),
+            [$chunk],
+            [$attr],
+        );
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($encryptedElements);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+    }
+
+
     /**
      */
     public function testMarshallingElementOrdering(): void
@@ -83,32 +112,5 @@ final class EncryptedElementsTest extends TestCase
 
         $this->assertCount(1, $encryptedElementsElements);
         $this->assertEquals('ssp:Chunk', $encryptedElementsElements[0]->tagName);
-    }
-
-
-    // test marshalling
-
-
-    /**
-     * Test that creating a EncryptedElements from scratch works.
-     */
-    public function testMarshalling(): void
-    {
-        $xpath = XPath::fromString('/bookstore/book[price>35.00]/title');
-        $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
-        $chunk = new Chunk(DOMDocumentFactory::fromString(
-            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
-        )->documentElement);
-
-        $encryptedElements = new EncryptedElements(
-            [$xpath],
-            AnyURIValue::fromString('urn:x-simplesamlphp:version'),
-            [$chunk],
-            [$attr],
-        );
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($encryptedElements),
-        );
     }
 }

@@ -51,6 +51,32 @@ final class SpnegoContextTokenTest extends TestCase
     }
 
 
+    // test marshalling
+
+
+    /**
+     * Test that creating a SpnegoContextToken from scratch works.
+     */
+    public function testMarshalling(): void
+    {
+        $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
+        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
+        $chunk = new Chunk(DOMDocumentFactory::fromString(
+            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
+        )->documentElement);
+
+        $issuer = IssuerName::fromString('urn:x-simplesamlphp:issuer');
+
+        $spnegoContextToken = new SpnegoContextToken($issuer, [$chunk], [$includeToken->toAttribute(), $attr]);
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($spnegoContextToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+    }
+
+
     /**
      */
     public function testMarshallingElementOrdering(): void
@@ -80,29 +106,5 @@ final class SpnegoContextTokenTest extends TestCase
 
         $this->assertCount(1, $spnegoContextTokenElements);
         $this->assertEquals('ssp:Chunk', $spnegoContextTokenElements[0]->tagName);
-    }
-
-
-    // test marshalling
-
-
-    /**
-     * Test that creating a SpnegoContextToken from scratch works.
-     */
-    public function testMarshalling(): void
-    {
-        $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
-        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
-        $chunk = new Chunk(DOMDocumentFactory::fromString(
-            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
-        )->documentElement);
-
-        $issuer = IssuerName::fromString('urn:x-simplesamlphp:issuer');
-
-        $spnegoContextToken = new SpnegoContextToken($issuer, [$chunk], [$includeToken->toAttribute(), $attr]);
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($spnegoContextToken),
-        );
     }
 }
