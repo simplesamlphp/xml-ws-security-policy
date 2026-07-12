@@ -13,7 +13,7 @@ use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
-use function array_pop;
+use function array_last;
 use function sprintf;
 
 /**
@@ -105,7 +105,7 @@ abstract class AbstractIssuedTokenType extends AbstractSpElement
 
         return new static(
             $requestSecurityTokenTemplate[0],
-            array_pop($issuer),
+            array_last($issuer),
             self::getChildElementsFromXML($xml),
             self::getAttributesNSFromXML($xml),
         );

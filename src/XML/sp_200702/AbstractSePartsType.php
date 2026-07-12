@@ -12,7 +12,7 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
-use function array_pop;
+use function array_last;
 use function sprintf;
 
 /**
@@ -126,9 +126,9 @@ abstract class AbstractSePartsType extends AbstractSpElement
         $attachments = Attachments::getChildrenOfClass($xml);
 
         return new static(
-            array_pop($body),
+            array_last($body),
             $header,
-            array_pop($attachments),
+            array_last($attachments),
             self::getChildElementsFromXML($xml),
             self::getAttributesNSFromXML($xml),
         );

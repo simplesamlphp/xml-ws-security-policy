@@ -11,7 +11,7 @@ use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
-use function array_pop;
+use function array_last;
 use function sprintf;
 
 /**
@@ -98,7 +98,7 @@ abstract class AbstractSpnegoContextTokenType extends AbstractSpElement
         $issuer = array_merge($issuer, $issuerName);
 
         return new static(
-            array_pop($issuer),
+            array_last($issuer),
             self::getChildElementsFromXML($xml),
             self::getAttributesNSFromXML($xml),
         );
