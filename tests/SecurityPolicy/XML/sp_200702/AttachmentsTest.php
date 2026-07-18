@@ -51,9 +51,10 @@ final class AttachmentsTest extends TestCase
     {
         $attachments = new Attachments();
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($attachments),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($attachments);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

@@ -79,9 +79,10 @@ final class SslContextTokenTest extends TestCase
         )->documentElement);
 
         $sslContextToken = new SslContextToken([$chunk], [$includeToken->toAttribute(), $attr]);
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($sslContextToken),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($sslContextToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

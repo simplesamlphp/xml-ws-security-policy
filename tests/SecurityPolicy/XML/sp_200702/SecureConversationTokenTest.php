@@ -51,6 +51,36 @@ final class SecureConversationTokenTest extends TestCase
     }
 
 
+    // test marshalling
+
+
+    /**
+     * Test that creating a SecureConversationToken from scratch works.
+     */
+    public function testMarshalling(): void
+    {
+        $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
+        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
+        $chunk = new Chunk(DOMDocumentFactory::fromString(
+            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
+        )->documentElement);
+
+        $issuer = IssuerName::fromString('urn:x-simplesamlphp:issuer');
+
+        $secureConversationToken = new SecureConversationToken(
+            $issuer,
+            [$chunk],
+            [$includeToken->toAttribute(), $attr],
+        );
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($secureConversationToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+    }
+
+
     /**
      */
     public function testMarshallingElementOrdering(): void
@@ -84,34 +114,5 @@ final class SecureConversationTokenTest extends TestCase
 
         $this->assertCount(1, $secureConversationTokenElements);
         $this->assertEquals('ssp:Chunk', $secureConversationTokenElements[0]->tagName);
-    }
-
-
-    // test marshalling
-
-
-    /**
-     * Test that creating a SecureConversationToken from scratch works.
-     */
-    public function testMarshalling(): void
-    {
-        $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
-        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
-        $chunk = new Chunk(DOMDocumentFactory::fromString(
-            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
-        )->documentElement);
-
-        $issuer = IssuerName::fromString('urn:x-simplesamlphp:issuer');
-
-        $secureConversationToken = new SecureConversationToken(
-            $issuer,
-            [$chunk],
-            [$includeToken->toAttribute(), $attr],
-        );
-
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($secureConversationToken),
-        );
     }
 }

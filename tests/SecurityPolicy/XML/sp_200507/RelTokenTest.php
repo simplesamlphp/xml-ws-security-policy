@@ -79,9 +79,11 @@ final class RelTokenTest extends TestCase
         )->documentElement);
 
         $relToken = new RelToken([$chunk], [$includeToken->toAttribute(), $attr]);
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($relToken),
-        );
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($relToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

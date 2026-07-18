@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Test\WebServices\SecurityPolicy\XML\sp_200507;
 
-use DOMElement;
+use Dom;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -38,14 +38,14 @@ final class IssuerTest extends TestCase
     use SerializableElementTestTrait;
 
 
-    /** @var \DOMElement $referencePropertiesContent */
-    protected static DOMElement $referencePropertiesContent;
+    /** @var \Dom\Element $referencePropertiesContent */
+    protected static Dom\Element $referencePropertiesContent;
 
-    /** @var \DOMElement $referenceParametersContent */
-    protected static DOMElement $referenceParametersContent;
+    /** @var \Dom\Element $referenceParametersContent */
+    protected static Dom\Element $referenceParametersContent;
 
-    /** @var \DOMElement $customContent */
-    protected static DOMElement $customContent;
+    /** @var \Dom\Element $customContent */
+    protected static Dom\Element $customContent;
 
 
     /**
@@ -106,9 +106,10 @@ final class IssuerTest extends TestCase
             [$attr1],
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($issuer),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($issuer);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

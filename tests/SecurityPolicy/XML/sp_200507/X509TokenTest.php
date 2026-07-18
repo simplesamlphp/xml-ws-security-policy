@@ -79,9 +79,11 @@ final class X509TokenTest extends TestCase
         )->documentElement);
 
         $x509Token = new X509Token([$chunk], [$includeToken->toAttribute(), $attr]);
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($x509Token),
-        );
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($x509Token);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

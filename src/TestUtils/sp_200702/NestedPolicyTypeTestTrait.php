@@ -29,10 +29,11 @@ trait NestedPolicyTypeTestTrait
         /** @var \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractNestedPolicyType $np */
         $np = new static::$testedClass([static::$chunk], [static::$attr]);
 
-        $this->assertEquals(
-            static::$xmlRepresentation->saveXML(static::$xmlRepresentation->documentElement),
-            strval($np),
-        );
+        $expectedXml = static::$xmlRepresentation->saveXml(static::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($np);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -55,10 +56,11 @@ XML;
         /** @var \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractNestedPolicyType $np */
         $np = new static::$testedClass([static::$chunk]);
 
-        $this->assertEquals(
-            $xmlRepresentation->saveXML($xmlRepresentation->documentElement),
-            strval($np),
-        );
+        $expectedXml = $xmlRepresentation->saveXml($xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($np);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -75,12 +77,13 @@ XML;
         $xmlRepresentation = DOMDocumentFactory::fromString($xml);
 
         /** @var \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractNestedPolicyType $qns */
-        $qns = new static::$testedClass([], [static::$attr]);
+        $np = new static::$testedClass([], [static::$attr]);
 
-        $this->assertEquals(
-            $xmlRepresentation->saveXML($xmlRepresentation->documentElement),
-            strval($qns),
-        );
+        $expectedXml = $xmlRepresentation->saveXml($xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($np);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -127,10 +130,11 @@ XML;
         /** @var \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractNestedPolicyType $np */
         $np = static::$testedClass::fromXML($xmlRepresentation->documentElement);
 
-        $this->assertEquals(
-            $xmlRepresentation->saveXML($xmlRepresentation->documentElement),
-            strval($np),
-        );
+        $expectedXml = $xmlRepresentation->saveXml($xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($np);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -150,9 +154,10 @@ XML;
         /** @var \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702\AbstractNestedPolicyType $np */
         $np = static::$testedClass::fromXML($xmlRepresentation->documentElement);
 
-        $this->assertEquals(
-            $xmlRepresentation->saveXML($xmlRepresentation->documentElement),
-            strval($np),
-        );
+        $expectedXml = $xmlRepresentation->saveXml($xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($np);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }
