@@ -50,6 +50,35 @@ final class ContentEncryptedElementsTest extends TestCase
     }
 
 
+    // test marshalling
+
+
+    /**
+     * Test that creating a ContentEncryptedElements from scratch works.
+     */
+    public function testMarshalling(): void
+    {
+        $xpath = XPath::fromString('/bookstore/book[price>35.00]/title');
+        $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
+        $chunk = new Chunk(DOMDocumentFactory::fromString(
+            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
+        )->documentElement);
+
+        $contentEncryptedElements = new ContentEncryptedElements(
+            [$xpath],
+            AnyURIValue::fromString('urn:x-simplesamlphp:version'),
+            [$chunk],
+            [$attr],
+        );
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($contentEncryptedElements);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+    }
+
+
     /**
      */
     public function testMarshallingElementOrdering(): void
@@ -87,32 +116,5 @@ final class ContentEncryptedElementsTest extends TestCase
 
         $this->assertCount(1, $contentEncryptedElementsElements);
         $this->assertEquals('ssp:Chunk', $contentEncryptedElementsElements[0]->tagName);
-    }
-
-
-    // test marshalling
-
-
-    /**
-     * Test that creating a ContentEncryptedElements from scratch works.
-     */
-    public function testMarshalling(): void
-    {
-        $xpath = XPath::fromString('/bookstore/book[price>35.00]/title');
-        $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
-        $chunk = new Chunk(DOMDocumentFactory::fromString(
-            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
-        )->documentElement);
-
-        $contentEncryptedElements = new ContentEncryptedElements(
-            [$xpath],
-            AnyURIValue::fromString('urn:x-simplesamlphp:version'),
-            [$chunk],
-            [$attr],
-        );
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($contentEncryptedElements),
-        );
     }
 }

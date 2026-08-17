@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\WebServices\SecurityPolicy\Assert\Assert;
 use SimpleSAML\XML\ExtendableAttributesTrait;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
-use function array_pop;
+use function array_last;
 use function sprintf;
 
 /**
@@ -85,7 +85,7 @@ abstract class AbstractSecureConversationTokenType extends AbstractSpElement
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         $qualifiedName = static::getClassName(static::class);
         Assert::eq(
@@ -100,7 +100,7 @@ abstract class AbstractSecureConversationTokenType extends AbstractSpElement
         $issuer = array_merge($issuer, $issuerName);
 
         return new static(
-            array_pop($issuer),
+            array_last($issuer),
             self::getChildElementsFromXML($xml),
             self::getAttributesNSFromXML($xml),
         );
@@ -110,7 +110,7 @@ abstract class AbstractSecureConversationTokenType extends AbstractSpElement
     /**
      * Convert this element to XML.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 

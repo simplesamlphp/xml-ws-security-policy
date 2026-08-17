@@ -106,9 +106,11 @@ final class SignedElementsTest extends TestCase
             [$chunk],
             [$attr],
         );
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($signedElements),
-        );
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($signedElements);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

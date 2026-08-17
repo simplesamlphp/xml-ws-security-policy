@@ -51,6 +51,34 @@ final class RequiredPartsTest extends TestCase
     }
 
 
+    // test marshalling
+
+
+    /**
+     * Test that creating a RequiredParts from scratch works.
+     */
+    public function testMarshalling(): void
+    {
+        $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
+        $header = new Header(
+            AnyURIValue::fromString('urn:x-simplesamlphp:namespace'),
+            QNameValue::fromString('{urn:x-simplesamlphp}name'),
+            [$attr],
+        );
+        $chunk = new Chunk(DOMDocumentFactory::fromString(
+            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
+        )->documentElement);
+
+        $requiredParts = new RequiredParts([$header], [$chunk], [$attr]);
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($requiredParts);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+    }
+
+
     /**
      * Adding an empty RequiredParts element should yield an empty element.
      */
@@ -94,31 +122,5 @@ final class RequiredPartsTest extends TestCase
 
         $this->assertCount(1, $requiredPartsElements);
         $this->assertEquals('ssp:Chunk', $requiredPartsElements[0]->tagName);
-    }
-
-
-    // test marshalling
-
-
-    /**
-     * Test that creating a RequiredParts from scratch works.
-     */
-    public function testMarshalling(): void
-    {
-        $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
-        $header = new Header(
-            AnyURIValue::fromString('urn:x-simplesamlphp:namespace'),
-            QNameValue::fromString('{urn:x-simplesamlphp}name'),
-            [$attr],
-        );
-        $chunk = new Chunk(DOMDocumentFactory::fromString(
-            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
-        )->documentElement);
-
-        $requiredParts = new RequiredParts([$header], [$chunk], [$attr]);
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($requiredParts),
-        );
     }
 }

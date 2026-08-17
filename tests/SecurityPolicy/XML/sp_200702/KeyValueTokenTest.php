@@ -80,6 +80,7 @@ final class KeyValueTokenTest extends TestCase
         )->documentElement);
 
         $keyValueToken = new KeyValueToken([$chunk], [$includeToken->toAttribute(), $attr]);
+<<<<<<< HEAD
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($keyValueToken),
@@ -87,5 +88,13 @@ final class KeyValueTokenTest extends TestCase
 
         $this->assertFalse($keyValueToken->isEmptyElement());
         $this->assertEquals($keyValueToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
+=======
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($keyValueToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+>>>>>>> release-2.x
     }
 }

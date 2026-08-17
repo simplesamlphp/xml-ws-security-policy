@@ -54,6 +54,27 @@ final class SamlTokenTest extends TestCase
 
 
     /**
+     * Test that creating a SamlToken from scratch works.
+     */
+    public function testMarshalling(): void
+    {
+        $attr = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('value1'));
+        $chunk = new Chunk(DOMDocumentFactory::fromString(
+            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
+        )->documentElement);
+
+        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
+        $samlToken = new SamlToken([$chunk], [$includeToken->toAttribute(), $attr]);
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($samlToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+    }
+
+
+    /**
      * Adding an empty SamlToken element should yield an empty element.
      */
     public function testMarshallingEmptyElement(): void
@@ -66,6 +87,7 @@ final class SamlTokenTest extends TestCase
         );
         $this->assertTrue($samlToken->isEmptyElement());
     }
+<<<<<<< HEAD
 
 
     /**
@@ -89,4 +111,6 @@ final class SamlTokenTest extends TestCase
         $this->assertFalse($samlToken->isEmptyElement());
         $this->assertEquals($samlToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
     }
+=======
+>>>>>>> release-2.x
 }

@@ -30,10 +30,11 @@ trait QNameAssertionTypeTestTrait
         /** @var \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\AbstractQNameAssertionType $qna */
         $qna = new static::$testedClass([$attr]);
 
-        $this->assertEquals(
-            static::$xmlRepresentation->saveXML(static::$xmlRepresentation->documentElement),
-            strval($qna),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($qna);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 
@@ -44,7 +45,7 @@ trait QNameAssertionTypeTestTrait
     {
         $xmlRepresentation = clone static::$xmlRepresentation;
         $xmlRepresentation->documentElement->removeAttributeNS(C::NAMESPACE, 'attr1');
-        $xmlRepresentation->documentElement->removeAttributeNS(C::NAMESPACE, 'ssp');
+        $xmlRepresentation->documentElement->removeAttributeNS(C::NS_XMLNS, 'ssp');
 
         /** @var \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\AbstractQNameAssertionType $qna */
         $qna = new static::$testedClass();
@@ -66,7 +67,7 @@ trait QNameAssertionTypeTestTrait
     {
         $xmlRepresentation = clone static::$xmlRepresentation;
         $xmlRepresentation->documentElement->removeAttributeNS(C::NAMESPACE, 'attr1');
-        $xmlRepresentation->documentElement->removeAttributeNS(C::NAMESPACE, 'ssp');
+        $xmlRepresentation->documentElement->removeAttributeNS(C::NS_XMLNS, 'ssp');
 
         /** @var \SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\AbstractQNameAssertionType $qna */
         $qna = static::$testedClass::fromXML($xmlRepresentation->documentElement);

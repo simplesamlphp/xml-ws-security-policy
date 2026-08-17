@@ -107,9 +107,10 @@ final class RequiredElementsTest extends TestCase
             [$attr],
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($requiredElements),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($requiredElements);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

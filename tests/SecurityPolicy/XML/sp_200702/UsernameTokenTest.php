@@ -81,6 +81,7 @@ final class UsernameTokenTest extends TestCase
         $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
         $usernameToken = new UsernameToken([$chunk], [$includeToken->toAttribute(), $attr]);
 
+<<<<<<< HEAD
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($usernameToken),
@@ -88,5 +89,12 @@ final class UsernameTokenTest extends TestCase
 
         $this->assertFalse($usernameToken->isEmptyElement());
         $this->assertEquals($usernameToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
+=======
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($usernameToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+>>>>>>> release-2.x
     }
 }

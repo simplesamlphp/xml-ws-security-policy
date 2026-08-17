@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\Test\WebServices\SecurityPolicy\XML\sp_200507;
 
-use DOMElement;
+use Dom;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -48,11 +48,11 @@ final class SecureConversationTokenTest extends TestCase
     use SerializableElementTestTrait;
 
 
-    /** @var \DOMElement $referencePropertiesContent */
-    protected static DOMElement $referencePropertiesContent;
+    /** @var \Dom\Element $referencePropertiesContent */
+    protected static Dom\Element $referencePropertiesContent;
 
-    /** @var \DOMElement $referenceParametersContent */
-    protected static DOMElement $referenceParametersContent;
+    /** @var \Dom\Element $referenceParametersContent */
+    protected static Dom\Element $referenceParametersContent;
 
 
     /**
@@ -75,6 +75,7 @@ final class SecureConversationTokenTest extends TestCase
     }
 
 
+<<<<<<< HEAD
     /**
      */
     public function testMarshallingElementOrdering(): void
@@ -134,6 +135,8 @@ final class SecureConversationTokenTest extends TestCase
     }
 
 
+=======
+>>>>>>> release-2.x
     // test marshalling
 
 
@@ -178,15 +181,77 @@ final class SecureConversationTokenTest extends TestCase
             [$includeToken, $attr1],
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($secureConversationToken),
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($secureConversationToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+    }
+
+
+    /**
+     */
+    public function testMarshallingElementOrdering(): void
+    {
+        $attr1 = new XMLAttribute('urn:x-simplesamlphp:namespace', 'ssp', 'test1', StringValue::fromString('value1'));
+        $attr2 = new XMLAttribute('urn:x-simplesamlphp:namespace', 'ssp', 'test2', StringValue::fromString('value2'));
+        $attr3 = new XMLAttribute('urn:x-simplesamlphp:namespace', 'ssp', 'test3', StringValue::fromString('value3'));
+        $attr4 = new XMLAttribute('urn:x-simplesamlphp:namespace', 'ssp', 'test4', StringValue::fromString('value4'));
+
+        $referenceParameters = new ReferenceParameters([new Chunk(self::$referenceParametersContent)]);
+        $referenceProperties = new ReferenceProperties([new Chunk(self::$referencePropertiesContent)]);
+
+        $portType = new PortType(QNameValue::fromString('{urn:x-simplesamlphp:namespace}ssp:Chunk'), [$attr3]);
+        $serviceName = new ServiceName(
+            QNameValue::fromString('{urn:x-simplesamlphp:namespace}ssp:Chunk'),
+            NCNameValue::fromString('PHPUnit'),
+            [$attr4],
         );
 
+<<<<<<< HEAD
         $this->assertFalse($secureConversationToken->isEmptyElement());
         $this->assertEquals(
             $secureConversationToken->getIncludeToken(),
             IncludeTokenValue::fromEnum(IncludeToken::Always),
         );
+=======
+        $chunk = new Chunk(DOMDocumentFactory::fromString(
+            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
+        )->documentElement);
+
+        $issuer = new Issuer(
+            new Address(AnyURIValue::fromString('https://login.microsoftonline.com/login.srf'), [$attr2]),
+            $referenceProperties,
+            $referenceParameters,
+            $portType,
+            $serviceName,
+            [$chunk],
+            [$attr2],
+        );
+
+        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always)->toAttribute();
+        $secureConversationToken = new SecureConversationToken(
+            $issuer,
+            [$chunk],
+            [$includeToken, $attr1],
+        );
+        $secureConversationTokenElement = $secureConversationToken->toXML();
+
+        // Test for a Issuer
+        $xpCache = XPath::getXPath($secureConversationTokenElement);
+        $secureConversationTokenElements = XPath::xpQuery($secureConversationTokenElement, './sp:Issuer', $xpCache);
+        $this->assertCount(1, $secureConversationTokenElements);
+
+        // Test ordering of SecureConversationToken contents
+        /** @var \Dom\Element[] $secureConversationTokenElements */
+        $secureConversationTokenElements = XPath::xpQuery(
+            $secureConversationTokenElement,
+            './sp:Issuer/following-sibling::*',
+            $xpCache,
+        );
+
+        $this->assertCount(1, $secureConversationTokenElements);
+        $this->assertEquals('ssp:Chunk', $secureConversationTokenElements[0]->tagName);
+>>>>>>> release-2.x
     }
 }

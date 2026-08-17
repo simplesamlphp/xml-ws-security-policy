@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\WebServices\SecurityPolicy\XML\sp_200702;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\WebServices\SecurityPolicy\Assert\Assert;
 use SimpleSAML\XML\ExtendableAttributesTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
@@ -80,7 +80,7 @@ abstract class AbstractHeaderType extends AbstractSpElement
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         $qualifiedName = static::getClassName(static::class);
         Assert::eq(
@@ -93,9 +93,10 @@ abstract class AbstractHeaderType extends AbstractSpElement
         $namespacedAttributes = self::getAttributesNSFromXML($xml);
         $namespace = self::getAttribute($xml, 'Namespace', AnyURIValue::class);
 
+        $name = $xml->getAttribute('Name');
         return new static(
             $namespace,
-            $xml->hasAttribute('Name') ? QNameValue::fromString($xml->getAttribute('Name')) : null,
+            ($name !== null) ? QNameValue::fromString($name) : null,
             $namespacedAttributes,
         );
     }
@@ -104,7 +105,7 @@ abstract class AbstractHeaderType extends AbstractSpElement
     /**
      * Convert this element to XML.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
 

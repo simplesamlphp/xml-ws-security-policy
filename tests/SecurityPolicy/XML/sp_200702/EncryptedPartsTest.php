@@ -73,12 +73,13 @@ final class EncryptedPartsTest extends TestCase
             '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
         )->documentElement);
 
-        $EncryptedParts = new EncryptedParts($body, [$header], $attachments, [$chunk], [$attr]);
+        $encryptedParts = new EncryptedParts($body, [$header], $attachments, [$chunk], [$attr]);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($EncryptedParts),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($encryptedParts);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 

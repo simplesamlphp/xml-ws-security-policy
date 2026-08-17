@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507;
 
-use SimpleSAML\WebServices\SecurityPolicy\XML\sp_200507\Type\XPathValue;
 use SimpleSAML\XML\TypedTextContentTrait;
+use SimpleSAML\XMLSchema\Type\Helper\XPathValue;
 
 /**
  * An XPath element

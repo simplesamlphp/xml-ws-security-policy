@@ -120,6 +120,7 @@ final class IssuedTokenTest extends TestCase
             [$chunk],
             [$includeToken->toAttribute(), $attr],
         );
+<<<<<<< HEAD
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($issuedToken),
@@ -127,5 +128,13 @@ final class IssuedTokenTest extends TestCase
 
         $this->assertFalse($issuedToken->isEmptyElement());
         $this->assertEquals($issuedToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
+=======
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($issuedToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+>>>>>>> release-2.x
     }
 }

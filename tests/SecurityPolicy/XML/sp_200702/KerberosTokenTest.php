@@ -80,6 +80,7 @@ final class KerberosTokenTest extends TestCase
 
         $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
         $kerberosToken = new KerberosToken([$chunk], [$includeToken->toAttribute(), $attr]);
+<<<<<<< HEAD
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($kerberosToken),
@@ -87,5 +88,13 @@ final class KerberosTokenTest extends TestCase
 
         $this->assertFalse($kerberosToken->isEmptyElement());
         $this->assertEquals($kerberosToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
+=======
+
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($kerberosToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
+>>>>>>> release-2.x
     }
 }
