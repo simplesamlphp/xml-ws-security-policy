@@ -76,72 +76,6 @@ final class IssuedTokenTest extends TestCase
     }
 
 
-<<<<<<< HEAD
-    /**
-     */
-    public function testMarshallingElementOrdering(): void
-    {
-        $attr1 = new XMLAttribute('urn:x-simplesamlphp:namespace', 'ssp', 'test1', StringValue::fromString('value1'));
-        $attr2 = new XMLAttribute('urn:x-simplesamlphp:namespace', 'ssp', 'test2', StringValue::fromString('value2'));
-        $attr3 = new XMLAttribute('urn:x-simplesamlphp:namespace', 'ssp', 'test3', StringValue::fromString('value3'));
-        $attr4 = new XMLAttribute('urn:x-simplesamlphp:namespace', 'ssp', 'test4', StringValue::fromString('value4'));
-
-        $referenceParameters = new ReferenceParameters([new Chunk(self::$referenceParametersContent)]);
-        $referenceProperties = new ReferenceProperties([new Chunk(self::$referencePropertiesContent)]);
-
-        $portType = new PortType(QNameValue::fromString('{urn:x-simplesamlphp:namespace}ssp:Chunk'), [$attr3]);
-        $serviceName = new ServiceName(
-            QNameValue::fromString('{urn:x-simplesamlphp:namespace}ssp:Chunk'),
-            NCNameValue::fromString('PHPUnit'),
-            [$attr4],
-        );
-
-        $chunk = new Chunk(DOMDocumentFactory::fromString(
-            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">some</ssp:Chunk>',
-        )->documentElement);
-
-        $issuer = new Issuer(
-            new Address(AnyURIValue::fromString('https://login.microsoftonline.com/login.srf'), [$attr2]),
-            $referenceProperties,
-            $referenceParameters,
-            $portType,
-            $serviceName,
-            [$chunk],
-            [$attr2],
-        );
-
-        $requestSecurityTokenTemplate = new RequestSecurityTokenTemplate(
-            AnyURIValue::fromString('urn:x-simplesamlphp:version'),
-            [$chunk],
-            [$attr1],
-        );
-
-        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always)->toAttribute();
-        $issuedToken = new IssuedToken(
-            $requestSecurityTokenTemplate,
-            $issuer,
-            [$chunk],
-            [$includeToken, $attr1],
-        );
-        $issuedTokenElement = $issuedToken->toXML();
-
-        // Test for a Issuer
-        $xpCache = XPath::getXPath($issuedTokenElement);
-        $issuedTokenElements = XPath::xpQuery($issuedTokenElement, './sp:Issuer', $xpCache);
-        $this->assertCount(1, $issuedTokenElements);
-
-        // Test ordering of IssuedToken contents
-        /** @var \DOMElement[] $issuedTokenElements */
-        $issuedTokenElements = XPath::xpQuery($issuedTokenElement, './sp:Issuer/following-sibling::*', $xpCache);
-
-        $this->assertCount(2, $issuedTokenElements);
-        $this->assertEquals('sp:RequestSecurityTokenTemplate', $issuedTokenElements[0]->tagName);
-        $this->assertEquals('ssp:Chunk', $issuedTokenElements[1]->tagName);
-    }
-
-
-=======
->>>>>>> release-2.x
     // test marshalling
 
 
@@ -189,8 +123,6 @@ final class IssuedTokenTest extends TestCase
         $issuedToken = new IssuedToken(
             $requestSecurityTokenTemplate,
             $issuer,
-<<<<<<< HEAD
-=======
             [$chunk],
             [$includeToken, $attr1],
         );
@@ -238,7 +170,6 @@ final class IssuedTokenTest extends TestCase
 
         $requestSecurityTokenTemplate = new RequestSecurityTokenTemplate(
             AnyURIValue::fromString('urn:x-simplesamlphp:version'),
->>>>>>> release-2.x
             [$chunk],
             [$includeToken, $attr1],
         );
@@ -250,11 +181,6 @@ final class IssuedTokenTest extends TestCase
             [$chunk],
             [$includeToken, $attr1],
         );
-<<<<<<< HEAD
-
-        $this->assertFalse($issuedToken->isEmptyElement());
-        $this->assertEquals($issuedToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
-=======
         $issuedTokenElement = $issuedToken->toXML();
 
         // Test for a Issuer
@@ -269,6 +195,5 @@ final class IssuedTokenTest extends TestCase
         $this->assertCount(2, $issuedTokenElements);
         $this->assertEquals('sp:RequestSecurityTokenTemplate', $issuedTokenElements[0]->tagName);
         $this->assertEquals('ssp:Chunk', $issuedTokenElements[1]->tagName);
->>>>>>> release-2.x
     }
 }

@@ -81,23 +81,10 @@ final class SecurityContextTokenTest extends TestCase
         $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
         $securityContextToken = new SecurityContextToken([$chunk], [$includeToken->toAttribute(), $attr]);
 
-<<<<<<< HEAD
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($securityContextToken),
-        );
-
-        $this->assertFalse($securityContextToken->isEmptyElement());
-        $this->assertEquals(
-            $securityContextToken->getIncludeToken(),
-            IncludeTokenValue::fromEnum(IncludeToken::Always),
-        );
-=======
         $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
         $this->assertNotFalse($expectedXml);
         $actualXml = strval($securityContextToken);
 
         $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
->>>>>>> release-2.x
     }
 }

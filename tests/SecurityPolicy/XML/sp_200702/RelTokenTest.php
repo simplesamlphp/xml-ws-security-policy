@@ -80,21 +80,11 @@ final class RelTokenTest extends TestCase
 
         $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always);
         $relToken = new RelToken([$chunk], [$includeToken->toAttribute(), $attr]);
-<<<<<<< HEAD
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($relToken),
-        );
-
-        $this->assertFalse($relToken->isEmptyElement());
-        $this->assertEquals($relToken->getIncludeToken(), IncludeTokenValue::fromEnum(IncludeToken::Always));
-=======
 
         $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
         $this->assertNotFalse($expectedXml);
         $actualXml = strval($relToken);
 
         $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
->>>>>>> release-2.x
     }
 }
