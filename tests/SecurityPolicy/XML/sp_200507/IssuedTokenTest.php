@@ -168,13 +168,13 @@ final class IssuedTokenTest extends TestCase
             [$attr2],
         );
 
+        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always)->toAttribute();
         $requestSecurityTokenTemplate = new RequestSecurityTokenTemplate(
             AnyURIValue::fromString('urn:x-simplesamlphp:version'),
             [$chunk],
             [$includeToken, $attr1],
         );
 
-        $includeToken = IncludeTokenValue::fromEnum(IncludeToken::Always)->toAttribute();
         $issuedToken = new IssuedToken(
             $requestSecurityTokenTemplate,
             $issuer,
